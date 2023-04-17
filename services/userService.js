@@ -22,23 +22,25 @@ const getSingleUserService = async (userId) => {
     });
 };
 
-const insertUserService = async (userData) => {
-    return await User.create({
+const updateUserService = async (userData, userId) => {
+    return await User.update({
         email: userData.email,
         username: userData.username,
         password: userData.password
     }, {
-        fields: fields
+        where: {
+            id: userId
+        }
     }).catch((err) => {
         throw new Error(err.message);
     });
 };
 
-const updateUserService = async (userData) => {
-    return await User.update({
-        email: userData.email,
-        username: userData.username,
-        password: userData.password
+const deleteSingleUserService = async (userId) => {
+    return await User.destroy({
+        where: {
+            id: userId
+        }
     }).catch((err) => {
         throw new Error(err.message);
     });
@@ -47,6 +49,6 @@ const updateUserService = async (userData) => {
 module.exports = {
     getAllUsersService,
     getSingleUserService,
-    insertUserService,
     updateUserService,
+    deleteSingleUserService
 };
