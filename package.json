@@ -4,7 +4,12 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "devStart": "nodemon ./bin/www"
+    "devStart": "nodemon ./bin/www",
+    "make-model": "npx sequelize-cli model:generate --name user --attributes username:string",
+    "make-seed": "npx sequelize-cli seed:generate --name test",
+    "undo-seed": "npx sequelize-cli db:seed:undo:all",
+    "migrate": "npx sequelize-cli db:migrate",
+    "undo-migrate": "npx sequelize-cli db:migrate:undo:all"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -19,5 +24,8 @@
     "pg": "^8.10.0",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.30.0"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.0"
   }
 }
