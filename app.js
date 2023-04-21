@@ -14,6 +14,7 @@ const db = require('./db/databasepg');
 const userRouter = require('./routes/userRouter');
 const authRouter = require('./routes/authRouter');
 const projectRouter = require('./routes/projectRouter');
+const projectSectionRouter = require('./routes/projectSectionRouter');
 
 // database connection
 try {
@@ -40,6 +41,7 @@ app.use('/', indexRouter);
 app.use('/user', userRouter);
 app.use('/auth', authRouter);
 app.use('/project', projectRouter);
+app.use('/projectSection', projectSectionRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
