@@ -1,0 +1,29 @@
+const express = require("express");
+const bodyParser = require("body-parser");
+const projectController = require("../controllers/projectController");
+const { generateMesage } = require("../util/messageGenerator");
+
+const projectRouter = express.Router();
+
+projectRouter.use(bodyParser.json());
+projectRouter.use(bodyParser.urlencoded({ extended: false, limit: "2mb" }));
+
+projectRouter.route('/')
+    .get(projectController.getAllProjects)
+    .post(projectController.insertProject)
+    .put((req, res, next) => {
+        res.status(403).json(generateMesage(false, null, "PUT operation is not supported on /project"));
+    })
+    .delete((req, res, next) => {
+        res.status(403).json(generateMesage(false, null, "DELETE operation is not supported on /project"));
+    });
+
+projectRouter.route('/:projectId')
+    .get(projectController.getSingleProject)
+    .post((req, res, next) => {
+        res.status(403).json(generateMesage(false, null, "POST operation is not supported on /project"));
+    })
+    .put(projectController.updateProject)
+    .delete(projectController.deleteProject);
+
+module.exports = projectRouter;

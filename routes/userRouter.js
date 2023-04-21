@@ -10,19 +10,19 @@ userRouter.use(bodyParser.urlencoded({ extended: false, limit: "2mb" }));
 
 userRouter.route('/')
     .get(userController.getAllUsers)
-    .post(async (req, res, next) => {
+    .post((req, res, next) => {
         res.status(403).json(generateMesage(false, null, "POST operation is not supported on /user"));
     })
-    .put(async (req, res, next) => {
+    .put((req, res, next) => {
         res.status(403).json(generateMesage(false, null, "PUT operation is not supported on /user"));
     })
-    .delete(async (req, res, next) => {
+    .delete((req, res, next) => {
         res.status(403).json(generateMesage(false, null, "DELETE operation is not supported on /user"));
     });
 
 userRouter.route('/:userId')
     .get(userController.getSingleUser)
-    .post(async (req, res, next) => {
+    .post((req, res, next) => {
         res.status(403).json(generateMesage(false, null, "POST operation is not supported on /user/:userId"));
     })
     .put(userController.updateUser)

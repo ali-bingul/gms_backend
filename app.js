@@ -13,6 +13,7 @@ app.disable("x-powered-by");
 const db = require('./db/databasepg');
 const userRouter = require('./routes/userRouter');
 const authRouter = require('./routes/authRouter');
+const projectRouter = require('./routes/projectRouter');
 
 // database connection
 try {
@@ -38,6 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/user', userRouter);
 app.use('/auth', authRouter);
+app.use('/project', projectRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
