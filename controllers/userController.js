@@ -1,9 +1,9 @@
 const userService = require("../services/userService");
 const { generateMesage } = require("../util/messageGenerator");
 
-const getAllUsersController = (req, res, next) => {
+const getAllUsers = (req, res, next) => {
     res.setHeader("Content-Type", "application/json");
-    userService.getAllUsersService().then((userDatas) => {
+    userService.getAllUsers().then((userDatas) => {
         res.statusCode = 200;
         res.json(generateMesage(true, userDatas));
     }).catch((err) => {
@@ -12,10 +12,9 @@ const getAllUsersController = (req, res, next) => {
     });
 };
 
-const getSingleUserController = (req, res, next) => {
+const getSingleUser = (req, res, next) => {
     res.setHeader("Content-Type", "application/json");
-
-    userService.getSingleUserService(req.params.userId).then((userData) => {
+    userService.getSingleUser(req.params.userId).then((userData) => {
         res.statusCode = 200;
         res.json(generateMesage(true, userData));
     }).catch((err) => {
@@ -24,9 +23,9 @@ const getSingleUserController = (req, res, next) => {
     });
 };
 
-const updateUserController = (req, res, next) => {
+const updateUser = (req, res, next) => {
     res.setHeader("Content-Type", "application/json");
-    userService.updateUserService(req.body, req.params.userId).then((response) => {
+    userService.updateUser(req.body, req.params.userId).then((response) => {
         res.statusCode = 200;
         res.json(generateMesage(true, null, "User updated successfully"));
     }).catch((err) => {
@@ -35,9 +34,9 @@ const updateUserController = (req, res, next) => {
     });
 };
 
-const deleteSingleUserController = (req, res, next) => {
+const deleteSingleUser = (req, res, next) => {
     res.setHeader("Content-Type", "application/json");
-    userService.deleteSingleUserService(req.params.userId).then((response) => {
+    userService.deleteSingleUser(req.params.userId).then((response) => {
         res.statusCode = 200;
         res.json(generateMesage(true, null, "User deleted successfully"));
     }).catch((err) => {
@@ -47,8 +46,8 @@ const deleteSingleUserController = (req, res, next) => {
 };
 
 module.exports = {
-    getAllUsersController,
-    getSingleUserController,
-    updateUserController,
-    deleteSingleUserController
+    getAllUsers,
+    getSingleUser,
+    updateUser,
+    deleteSingleUser
 };

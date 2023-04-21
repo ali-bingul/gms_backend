@@ -1,19 +1,13 @@
 const User = require("../models/user");
 
-const fields = [
-    'username',
-    'email',
-    'password'
-];
-
-const getAllUsersService = async () => {
-    return await User.findAll().catch((err) => {
+const getAllUsers = () => {
+    return User.findAll().catch((err) => {
         throw new Error(err.message);
     });
 };
 
-const getSingleUserService = async (userId) => {
-    return await User.findOne({
+const getSingleUser = (userId) => {
+    return User.findOne({
         where: {
             id: userId
         }
@@ -22,8 +16,18 @@ const getSingleUserService = async (userId) => {
     });
 };
 
-const updateUserService = async (userData, userId) => {
-    return await User.update({
+const getSingleUserWithUsername = (username) => {
+    return User.findOne({
+        where: {
+            username: username
+        }
+    }).catch((err) => {
+        throw new Error(err.message);
+    });
+};
+
+const updateUser = (userData, userId) => {
+    return User.update({
         email: userData.email,
         username: userData.username,
         password: userData.password
@@ -36,8 +40,8 @@ const updateUserService = async (userData, userId) => {
     });
 };
 
-const deleteSingleUserService = async (userId) => {
-    return await User.destroy({
+const deleteSingleUser = (userId) => {
+    return User.destroy({
         where: {
             id: userId
         }
@@ -47,8 +51,9 @@ const deleteSingleUserService = async (userId) => {
 };
 
 module.exports = {
-    getAllUsersService,
-    getSingleUserService,
-    updateUserService,
-    deleteSingleUserService
+    getAllUsers,
+    getSingleUser,
+    updateUser,
+    deleteSingleUser,
+    getSingleUserWithUsername
 };
