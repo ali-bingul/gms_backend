@@ -15,6 +15,20 @@ const getProjectSections = (projectId) => {
     });
 };
 
+const getSingleProjectSection = (projectSectionId) => {
+    return new Promise((resolve, reject) => {
+        ProjectSection.findOne({
+            where: {
+                id: projectSectionId
+            }
+        }).then((projectSectionData) => {
+            resolve(projectSectionData);
+        }).catch((err) => {
+            reject(err);
+        });
+    });
+};
+
 const insertProjectSection = (projectSectionData, projectId) => {
     return new Promise((resolve, reject) => {
         ProjectSection.create({
@@ -75,6 +89,7 @@ const deleteSingleProjectSection = (projectSectionId) => {
 
 module.exports = {
     getProjectSections,
+    getSingleProjectSection,
     insertProjectSection,
     updateProjectSection,
     deleteProjectSections,

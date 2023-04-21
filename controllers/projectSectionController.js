@@ -13,6 +13,18 @@ const getProjectSections = (req, res, next) => {
         });
 };
 
+const getSingleProjectSection = (req, res, next) => {
+    res.setHeader("Content-Type", "application/json");
+    projectSectionService.getSingleProjectSection(req.params.projectSectionId)
+        .then((projectSectionData) => {
+            res.statusCode = 200;
+            res.json(generateMesage(true, projectSectionData));
+        }).catch((err) => {
+            res.statusCode = 400;
+            res.json(generateMesage(false, null, err.message));
+        });
+};
+
 const insertProjectSection = (req, res, next) => {
     res.setHeader("Content-Type", "application/json");
     projectSectionService.insertProjectSection(req.body, req.params.projectId)
@@ -63,6 +75,7 @@ const deleteSingleProjectSection = (req, res, next) => {
 
 module.exports = {
     getProjectSections,
+    getSingleProjectSection,
     insertProjectSection,
     updateProjectSection,
     deleteProjectSections,
