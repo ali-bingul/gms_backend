@@ -1,7 +1,7 @@
 const Project = require("../models/project");
 const { Op } = require('sequelize');
 
-const getAllProjects = (where = "", limit = undefined, offset = 0, year = undefined, term = undefined) => {
+const getAllProjects = (where = "", limit = null, offset = 0, year = null, term = null) => {
     return new Promise((resolve, reject) => {
         Project.findAll({
             where: {
