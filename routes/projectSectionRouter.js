@@ -8,7 +8,7 @@ const projectSectionRouter = express.Router();
 projectSectionRouter.use(bodyParser.json());
 projectSectionRouter.use(bodyParser.urlencoded({ extended: false, limit: "2mb" }));
 
-projectSectionRouter.route('/:projectId')
+projectSectionRouter.route('/projectId/:projectId')
     .get(projectSectionController.getProjectSections)
     .post(projectSectionController.insertProjectSection)
     .put((req, res, next) => {
@@ -16,7 +16,7 @@ projectSectionRouter.route('/:projectId')
     })
     .delete(projectSectionController.deleteProjectSections);
 
-projectSectionRouter.route('/:projectSectionId')
+projectSectionRouter.route('/projectSectionId/:projectSectionId')
     .get(projectSectionController.getSingleProjectSection)
     .post((req, res, next) => {
         res.status(403).json(generateMesage(false, null, "POST operation is not supported on /projectSection"));
