@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const projectDocumentController = require("../controllers/projectDocumentController");
-const { generateMesage } = require("../util/messageGenerator");
+const authenticate = require("../authenticate");
 
 const projectDocumentRouter = express.Router();
 
@@ -10,10 +10,10 @@ projectDocumentRouter.use(bodyParser.urlencoded({ extended: false, limit: "2mb" 
 
 projectDocumentRouter.route('/projectId/:projectId')
     .get(projectDocumentController.getProjectDocuments)
-    .post(projectDocumentController.insertProjectDocument);
+    .post(authenticate.verifyUser, projectDocumentController.insertProjectDocument);
 
 projectDocumentRouter.route('/projectDocumentId/:projectDocumentId')
-    .put(projectDocumentController.updateProjectDocumentTitle)
-    .delete(projectDocumentController.deleteSingleProjectDocument);
+    .put(authenticate.verifyUser, projectDocumentController.updateProjectDocumentTitle)
+    .delete(authenticate.verifyUser, projectDocumentController.deleteSingleProjectDocument);
 
 module.exports = projectDocumentRouter;
