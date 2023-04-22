@@ -14,12 +14,12 @@ const getProjectDocuments = (projectId) => {
     });
 };
 
-const insertProjectDocument = (projectDocumentData, projectId) => {
+const insertProjectDocument = (title, filename, projectId) => {
     return new Promise((resolve, reject) => {
         ProjectDocument.create({
             project_id: projectId,
-            title: projectDocumentData.title,
-            filename: projectDocumentData.filename
+            title: title,
+            filename: filename
         }).then((insertedProjectDocumentData) => {
             resolve(insertedProjectDocumentData);
         }).catch((err) => {
