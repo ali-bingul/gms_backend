@@ -50,10 +50,28 @@ const deleteSingleUser = (userId) => {
     });
 };
 
+const isUserExists = (userId) => {
+    return new Promise((resolve, reject) => {
+        User.count({
+            where: {
+                id: userId
+            }
+        }).then((count) => {
+            if (count === 0) {
+                resolve(false);
+            }
+            resolve(true);
+        }).catch((err) => {
+            reject(err);
+        });
+    });
+};
+
 module.exports = {
     getAllUsers,
     getSingleUser,
     updateUser,
     deleteSingleUser,
-    getSingleUserWithUsername
+    getSingleUserWithUsername,
+    isUserExists
 };
