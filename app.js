@@ -15,6 +15,7 @@ const userRouter = require('./routes/userRouter');
 const authRouter = require('./routes/authRouter');
 const projectRouter = require('./routes/projectRouter');
 const projectSectionRouter = require('./routes/projectSectionRouter');
+const projectDocumentRouter = require('./routes/projectDocumentRouter');
 
 // database connection
 try {
@@ -42,6 +43,7 @@ app.use('/user', userRouter);
 app.use('/auth', authRouter);
 app.use('/project', projectRouter);
 app.use('/projectSection', projectSectionRouter);
+app.use('/projectDocument', projectDocumentRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
