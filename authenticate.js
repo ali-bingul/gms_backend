@@ -14,6 +14,8 @@ const verifyUser = (req, res, next) => {
             userService.isUserExists(decoded.id)
                 .then((isUserExists) => {
                     if (isUserExists) {
+                        res.locals.payload = decoded;
+                        res.locals.isUserExists = isUserExists;
                         return next();
                     }
                     const err = new Error("You are not authorized to perform this operation!");
@@ -30,6 +32,25 @@ const verifyUser = (req, res, next) => {
     }
 };
 
+const verifyAdmin = (req, res, next) => {
+    if (res.locals.isUserExists) {
+        if (res.locals.payload.is_admin) {
+            return next();
+        } else {
+            // is not admin
+            const err = new Error("You are not authorized to perform this operation!");
+            err.status = 403;
+            next(err);
+        }
+    } else {
+        // is not user
+        const err = new Error("You are not authorized to perform this operation!");
+        err.status = 403;
+        next(err);
+    }
+};
+
 module.exports = {
-    verifyUser
+    verifyUser,
+    verifyAdmin
 };

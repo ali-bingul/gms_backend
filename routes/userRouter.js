@@ -10,7 +10,7 @@ userRouter.use(bodyParser.json());
 userRouter.use(bodyParser.urlencoded({ extended: false, limit: "2mb" }));
 
 userRouter.route('/')
-    .get(authenticate.verifyUser, userController.getAllUsers)
+    .get(authenticate.verifyUser, authenticate.verifyAdmin, userController.getAllUsers)
     .post((req, res, next) => {
         res.status(403).json(generateMesage(false, null, "POST operation is not supported on /user"));
     })

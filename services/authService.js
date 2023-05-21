@@ -7,22 +7,22 @@ require("dotenv").config();
 const fields = [
     'username',
     'email',
-    'password'
+    'password',
+    'is_admin'
 ];
 
 const signupUser = (userData) => {
-    console.log("userData", userData.username);
     return new Promise((resolve, reject) => {
         userService.getSingleUserWithUsername(userData.username).then((user) => {
             console.log(user);
             if (user === null) {
                 console.log("inside if", userData.password);
                 encryptionService.encryptPassword(userData.password).then((hashedPassword) => {
-                    console.log("hashedPassword");
                     User.create({
                         email: userData.email,
                         username: userData.username,
-                        password: hashedPassword
+                        password: hashedPassword,
+                        is_admin: false
                     }, {
                         fields: fields
                     }).then((createUserResponse) => {

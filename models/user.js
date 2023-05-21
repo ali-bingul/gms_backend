@@ -12,6 +12,9 @@ const User = db.define('user', {
   },
   password: {
     type: DataTypes.STRING
+  },
+  is_admin: {
+    type: DataTypes.BOOLEAN
   }
 }, {
   timestamps: true,

@@ -30,7 +30,8 @@ const updateUser = (userData, userId) => {
     return User.update({
         email: userData.email,
         username: userData.username,
-        password: userData.password
+        password: userData.password,
+        is_admin: userData.is_admin
     }, {
         where: {
             id: userId
