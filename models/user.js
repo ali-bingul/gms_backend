@@ -4,6 +4,9 @@ const { Sequelize, DataTypes } = require('sequelize');
 
 const User = db.define('user', {
   // Model attributes are defined here
+  name_surname: {
+    type: DataTypes.STRING
+  },
   username: {
     type: DataTypes.STRING
   },
@@ -17,7 +20,7 @@ const User = db.define('user', {
     type: DataTypes.BOOLEAN
   }
 }, {
-  timestamps: true,
+  timestamps: false,
   freezeTableName: true
 });
 

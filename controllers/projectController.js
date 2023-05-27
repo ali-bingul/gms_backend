@@ -32,7 +32,7 @@ const getSingleProject = (req, res, next) => {
 
 const insertProject = (req, res, next) => {
     res.setHeader("Content-Type", "application/json");
-    projectService.insertProject(req.body)
+    projectService.insertProject(req.body, req.files)
         .then((insertProjectResponse) => {
             res.statusCode = 200;
             res.json(generateMesage(true, insertProjectResponse));

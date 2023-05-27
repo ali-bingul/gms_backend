@@ -1,8 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+
 const projectController = require("../controllers/projectController");
 const { generateMesage } = require("../util/messageGenerator");
 const authenticate = require("../authenticate");
+const { upload } = require("../services/uploadService");
 
 const projectRouter = express.Router();
 
@@ -11,7 +13,7 @@ projectRouter.use(bodyParser.urlencoded({ extended: false, limit: "2mb" }));
 
 projectRouter.route('/')
     .get(projectController.getAllProjects)
-    .post(authenticate.verifyUser, projectController.insertProject)
+    .post(authenticate.verifyUser, upload().any(), projectController.insertProject)
     .put((req, res, next) => {
         res.status(403).json(generateMesage(false, null, "PUT operation is not supported on /project"));
     })

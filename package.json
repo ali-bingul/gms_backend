@@ -6,7 +6,8 @@
     "start": "node ./bin/www",
     "devStart": "nodemon ./bin/www",
     "make-model": "npx sequelize-cli model:generate --name project_document --attributes title:string",
-    "make-seed": "npx sequelize-cli seed:generate --name test",
+    "make-seed": "npx sequelize-cli seed:generate --name user",
+    "seed": "npx sequelize-cli db:seed:all",
     "undo-seed": "npx sequelize-cli db:seed:undo:all",
     "migrate": "npx sequelize-cli db:migrate",
     "undo-migrate": "npx sequelize-cli db:migrate:undo:all"

@@ -1,5 +1,6 @@
 const Project = require("../models/project");
 const { Op } = require('sequelize');
+const User = require("../models/user");
 
 const getAllProjects = (where = "", limit = null, offset = 0, year = null, term = null) => {
     return new Promise((resolve, reject) => {
@@ -16,10 +17,6 @@ const getAllProjects = (where = "", limit = null, offset = 0, year = null, term 
                                 team_members: {
                                     [Op.iLike]: `%${where}%`
                                 },
-                            }, {
-                                professor: {
-                                    [Op.iLike]: `%${where}%`
-                                }
                             }
                         ]
                     }, {
@@ -29,6 +26,12 @@ const getAllProjects = (where = "", limit = null, offset = 0, year = null, term 
                     }
                 ]
             },
+            include: [
+                {
+                    model: User,
+                    as: "user"
+                }
+            ],
             limit: limit,
             offset: offset
         }).then((projectDatas) => {
@@ -53,15 +56,26 @@ const getSingleProject = (projectId) => {
     });
 };
 
-const insertProject = (projectData) => {
+const insertProject = (projectData, fileDatas) => {
     return new Promise((resolve, reject) => {
+        const finalPaperFilename = fileDatas.filter(file => file.fieldname === "final_paper_filename")[0].filename;
+        const presentationFilename = fileDatas.filter(file => file.fieldname === "presentation_filename")[0].filename;
+        let videoFilename = fileDatas.filter(file => file.fieldname === "video_filename")[0];
+        if (videoFilename) {
+            videoFilename = videoFilename.filename;
+        } else {
+            videoFilename = "";
+        }
         Project.create({
             name_surname: projectData.name_surname,
             project_name: projectData.project_name,
             team_members: projectData.team_members,
-            professor: projectData.professor,
             year: projectData.year,
-            term: projectData.term
+            term: projectData.term,
+            user_id: projectData.user_id,
+            video_filename: videoFilename,
+            final_paper_filename: finalPaperFilename,
+            presentation_filename: presentationFilename
         }).then((insertProjectResponse) => {
             resolve(insertProjectResponse);
         }).catch((err) => {

@@ -28,6 +28,7 @@ const getSingleUserWithUsername = (username) => {
 
 const updateUser = (userData, userId) => {
     return User.update({
+        name_surname: userData.name_surname,
         email: userData.email,
         username: userData.username,
         password: userData.password,

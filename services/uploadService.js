@@ -8,12 +8,12 @@ const upload = () => {
                 cb(null, './public/uploads');
             },
             filename: (req, file, cb) => {
-                const temp = req.body.title + '-' + Date.now() + path.extname(file.originalname);
+                const temp = file.originalname.split('.')[0] + "-" + Date.now().toString() + path.extname(file.originalname);
                 cb(null, temp);
             }
         }),
         limits: {
-            fileSize: 8000000 // Compliant: 8MB
+            fileSize: 16000000 // ~16MB
         }
     });
 };

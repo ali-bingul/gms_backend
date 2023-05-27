@@ -5,6 +5,7 @@ const jwtService = require("./jwtService");
 require("dotenv").config();
 
 const fields = [
+    'name_surname',
     'username',
     'email',
     'password',
@@ -19,6 +20,7 @@ const signupUser = (userData) => {
                 console.log("inside if", userData.password);
                 encryptionService.encryptPassword(userData.password).then((hashedPassword) => {
                     User.create({
+                        name_surname: userData.name_surname,
                         email: userData.email,
                         username: userData.username,
                         password: hashedPassword,

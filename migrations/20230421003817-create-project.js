@@ -18,14 +18,29 @@ module.exports = {
       team_members: {
         type: Sequelize.TEXT
       },
-      professor: {
-        type: Sequelize.STRING
-      },
       year: {
         type: Sequelize.INTEGER
       },
       term: {
         type: Sequelize.STRING
+      },
+      video_filename: {
+        type: Sequelize.STRING
+      },
+      final_paper_filename: {
+        type: Sequelize.STRING
+      },
+      presentation_filename: {
+        type: Sequelize.STRING
+      },
+      user_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: "user"
+          },
+          key: "id"
+        }
       },
       createdAt: {
         allowNull: false,
