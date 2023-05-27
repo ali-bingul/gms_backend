@@ -42,6 +42,18 @@ module.exports = {
           key: "id"
         }
       },
+      is_active: {
+        type: Sequelize.BOOLEAN
+      },
+      lesson_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: "lesson"
+          },
+          key: "id"
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "devStart": "nodemon ./bin/www",
-    "make-model": "npx sequelize-cli model:generate --name project_document --attributes title:string",
+    "make-model": "npx sequelize-cli model:generate --name lesson --attributes lesson_name:string",
     "make-seed": "npx sequelize-cli seed:generate --name user",
     "seed": "npx sequelize-cli db:seed:all",
     "undo-seed": "npx sequelize-cli db:seed:undo:all",

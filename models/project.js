@@ -3,6 +3,7 @@ const db = require("../db/databasepg");
 const { Sequelize, DataTypes } = require('sequelize');
 
 const User = require("./user");
+const Lesson = require("./lesson");
 
 const Project = db.define('project', {
   // Model attributes are defined here
@@ -29,6 +30,9 @@ const Project = db.define('project', {
   },
   presentation_filename: {
     type: DataTypes.STRING
+  },
+  is_active: {
+    type: DataTypes.BOOLEAN
   }
 }, {
   timestamps: true,
@@ -38,6 +42,11 @@ const Project = db.define('project', {
 Project.belongsTo(User, {
   foreignKey: "user_id",
   as: "user"
+});
+
+Project.belongsTo(Lesson, {
+  foreignKey: "lesson_id",
+  as: "lesson"
 });
 
 module.exports = Project;
