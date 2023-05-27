@@ -11,6 +11,11 @@ const projectRouter = express.Router();
 projectRouter.use(bodyParser.json());
 projectRouter.use(bodyParser.urlencoded({ extended: false, limit: "2mb" }));
 
+projectRouter.get('/getCount', projectController.getProjectsCount);
+
+projectRouter.put('/:projectId/setProjectActive', authenticate.verifyUser, projectController.setProjectActive);
+projectRouter.put('/:projectId/setProjectPassive', authenticate.verifyUser, projectController.setProjectPassive);
+
 projectRouter.route('/')
     .get(projectController.getAllProjects)
     .post(authenticate.verifyUser, upload().any(), projectController.insertProject)

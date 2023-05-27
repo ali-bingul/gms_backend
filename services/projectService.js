@@ -1,8 +1,9 @@
 const Project = require("../models/project");
 const { Op } = require('sequelize');
 const User = require("../models/user");
+const Lesson = require("../models/lesson");
 
-const getAllProjects = (where = "", limit = null, offset = 0, year = null, term = null) => {
+const getAllProjects = (where = "", limit = null, offset = 0, year = null, term = null, lessonId = null) => {
     return new Promise((resolve, reject) => {
         Project.findAll({
             where: {
@@ -23,6 +24,8 @@ const getAllProjects = (where = "", limit = null, offset = 0, year = null, term 
                         year: year
                     }, {
                         term: term
+                    }, {
+                        lesson_id: lessonId
                     }
                 ]
             },
@@ -30,6 +33,10 @@ const getAllProjects = (where = "", limit = null, offset = 0, year = null, term 
                 {
                     model: User,
                     as: "user"
+                },
+                {
+                    model: Lesson,
+                    as: "lesson"
                 }
             ],
             limit: limit,
@@ -47,7 +54,17 @@ const getSingleProject = (projectId) => {
         Project.findOne({
             where: {
                 id: projectId
-            }
+            },
+            include: [
+                {
+                    model: User,
+                    as: "user"
+                },
+                {
+                    model: Lesson,
+                    as: "lesson"
+                }
+            ],
         }).then((projectData) => {
             resolve(projectData);
         }).catch((err) => {
@@ -75,7 +92,8 @@ const insertProject = (projectData, fileDatas) => {
             user_id: projectData.user_id,
             video_filename: videoFilename,
             final_paper_filename: finalPaperFilename,
-            presentation_filename: presentationFilename
+            presentation_filename: presentationFilename,
+            is_active: false,
         }).then((insertProjectResponse) => {
             resolve(insertProjectResponse);
         }).catch((err) => {
@@ -90,9 +108,8 @@ const updateProject = (projectData, projectId) => {
             name_surname: projectData.name_surname,
             project_name: projectData.project_name,
             team_members: projectData.team_members,
-            professor: projectData.professor,
             year: projectData.year,
-            term: projectData.term
+            term: projectData.term,
         }, {
             where: {
                 id: projectId
@@ -119,10 +136,71 @@ const deleteProject = (projectId) => {
     });
 };
 
+const setProjectActive = (projectId) => {
+    return new Promise((resolve, reject) => {
+        Project.update({
+            is_active: true
+        }, {
+            where: {
+                id: projectId
+            }
+        })
+    });
+}
+
+const setProjectPassive = (projectId) => {
+    return new Promise((resolve, reject) => {
+        Project.update({
+            is_active: false
+        }, {
+            where: {
+                id: projectId
+            }
+        })
+    });
+}
+
+const getProjectsCount = (where = "", limit = null, offset = 0, year = null, term = null) => {
+    return new Promise((resolve, reject) => {
+        Project.count({
+            where: {
+                [Op.and]: [
+                    {
+                        [Op.or]: [
+                            {
+                                project_name: {
+                                    [Op.iLike]: `%${where}%`
+                                },
+                            }, {
+                                team_members: {
+                                    [Op.iLike]: `%${where}%`
+                                },
+                            }
+                        ]
+                    }, {
+                        year: year
+                    }, {
+                        term: term
+                    }, {
+                        lesson_id: lessonId
+                    }
+                ]
+            },
+        }).then((count) => {
+            resolve(count);
+        }).catch((err) => {
+            reject(err);
+        });
+    });
+}
+
 module.exports = {
     getAllProjects,
     getSingleProject,
     insertProject,
     updateProject,
-    deleteProject
+    deleteProject,
+    setProjectActive,
+    setProjectPassive,
+    getProjectsCount,
 };
