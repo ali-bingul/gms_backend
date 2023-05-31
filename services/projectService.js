@@ -81,6 +81,32 @@ const getUsersProjects = () => {
     });
 }
 
+const getProjectsWithUserId = (userId, year = null, term = null) => {
+    return new Promise((resolve, reject) => {
+        Project.findAll({
+            [Op.and]: [
+                {
+                    year: year
+                }, {
+                    term: term
+                }, {
+                    user_id: userId
+                }
+            ],
+            include: [
+                {
+                    model: Lesson,
+                    as: "lesson"
+                }
+            ],
+        }).then((projectDatas) => {
+            resolve(projectDatas);
+        }).catch((err) => {
+            reject(err);
+        });
+    });
+}
+
 const getSingleProject = (projectId) => {
     return new Promise((resolve, reject) => {
         Project.findOne({
@@ -231,6 +257,7 @@ const getProjectsCount = (where = "", limit = null, offset = 0, year = null, ter
 module.exports = {
     getAllProjects,
     getUsersProjects,
+    getProjectsWithUserId,
     getSingleProject,
     insertProject,
     updateProject,

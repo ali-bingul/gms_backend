@@ -18,6 +18,8 @@ projectRouter.put('/:projectId/setProjectPassive', authenticate.verifyUser, proj
 
 projectRouter.get('/getUsersProjects', projectController.getUsersProjects);
 
+projectRouter.get('/getProjectsWithUserId/:userId', authenticate.verifyUser, authenticate.verifyAdmin, projectController.getProjectsWithUserId);
+
 projectRouter.route('/')
     .get(projectController.getAllProjects)
     .post(upload().any(), projectController.insertProject)
