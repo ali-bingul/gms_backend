@@ -84,15 +84,17 @@ const getUsersProjects = () => {
 const getProjectsWithUserId = (userId, year = null, term = null) => {
     return new Promise((resolve, reject) => {
         Project.findAll({
-            [Op.and]: [
-                {
-                    year: year
-                }, {
-                    term: term
-                }, {
-                    user_id: userId
-                }
-            ],
+            where: {
+                [Op.and]: [
+                    {
+                        year: year
+                    }, {
+                        term: term
+                    }, {
+                        user_id: userId
+                    }
+                ]
+            },
             include: [
                 {
                     model: Lesson,
