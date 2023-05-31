@@ -19,6 +19,17 @@ const getAllProjects = (req, res, next) => {
     });
 };
 
+const getUsersProjects = (req, res, next) => {
+    res.setHeader("Content-Type", "application/json");
+    projectService.getUsersProjects().then((projectDatas) => {
+        res.statusCode = 200;
+        res.json(generateMesage(true, projectDatas));
+    }).catch((err) => {
+        res.statusCode = 400;
+        res.json(generateMesage(false, null, err.message));
+    });
+}
+
 const getSingleProject = (req, res, next) => {
     res.setHeader("Content-Type", "application/json");
     projectService.getSingleProject(req.params.projectId)
@@ -111,6 +122,7 @@ const getProjectsCount = (req, res, next) => {
 
 module.exports = {
     getAllProjects,
+    getUsersProjects,
     getSingleProject,
     insertProject,
     updateProject,

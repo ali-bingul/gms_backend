@@ -2,6 +2,9 @@ const Project = require("../models/project");
 const { Op } = require('sequelize');
 const User = require("../models/user");
 const Lesson = require("../models/lesson");
+const sequelize = require("sequelize");
+const { getCurrentTerm } = require("../helpers/getCurrentTerm");
+const { getCurrentYear } = require("../helpers/getCurrentYear");
 
 const getAllProjects = (where = "", limit = null, offset = 0, year = null, term = null, lessonId = null) => {
     return new Promise((resolve, reject) => {
@@ -48,6 +51,35 @@ const getAllProjects = (where = "", limit = null, offset = 0, year = null, term 
         });
     });
 };
+
+const getUsersProjects = () => {
+    return new Promise((resolve, reject) => {
+        Project.findAll({
+            group: "user.id",
+            attributes: ['user.id', [sequelize.fn('COUNT', sequelize.col('project.id')), 'projectCount']],
+            include: [
+                {
+                    model: User,
+                    as: "user"
+                }
+            ],
+            where: {
+                [Op.and]: [
+                    {
+                        term: getCurrentTerm()
+                    },
+                    {
+                        year: getCurrentYear()
+                    }
+                ]
+            }
+        }).then((projectDatas) => {
+            resolve(projectDatas);
+        }).catch((err) => {
+            reject(err);
+        })
+    });
+}
 
 const getSingleProject = (projectId) => {
     return new Promise((resolve, reject) => {
@@ -198,6 +230,7 @@ const getProjectsCount = (where = "", limit = null, offset = 0, year = null, ter
 
 module.exports = {
     getAllProjects,
+    getUsersProjects,
     getSingleProject,
     insertProject,
     updateProject,

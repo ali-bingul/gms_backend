@@ -23,6 +23,17 @@ const getSingleUser = (req, res, next) => {
     });
 };
 
+const getSingleUserWithUsername = (req, res, next) => {
+    res.setHeader("Content-Type", "application/json");
+    userService.getSingleUserWithUsername(req.body.username).then((singleUserData) => {
+        res.statusCode = 200;
+        res.json(generateMesage(true, singleUserData));
+    }).catch((err) => {
+        res.statusCode = 400;
+        res.json(generateMesage(false, null, err.message));
+    });
+}
+
 const updateUser = (req, res, next) => {
     res.setHeader("Content-Type", "application/json");
     userService.updateUser(req.body, req.params.userId).then((response) => {
@@ -45,9 +56,22 @@ const deleteSingleUser = (req, res, next) => {
     });
 };
 
+const isUserExists = (req, res, next) => {
+    res.setHeader("Content-Type", "application/json");
+    userService.isUserExists(req.params.userId).then((isUserExists) => {
+        res.statusCode = 200;
+        res.json(generateMesage(true, isUserExists));
+    }).catch((err) => {
+        res.statusCode = 400;
+        res.json(generateMesage(false, null, err.message));
+    });
+}
+
 module.exports = {
     getAllUsers,
     getSingleUser,
+    getSingleUserWithUsername,
     updateUser,
-    deleteSingleUser
+    deleteSingleUser,
+    isUserExists
 };

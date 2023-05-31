@@ -9,6 +9,10 @@ const userRouter = express.Router();
 userRouter.use(bodyParser.json());
 userRouter.use(bodyParser.urlencoded({ extended: false, limit: "2mb" }));
 
+userRouter.get('/getWithUsername', userController.getSingleUserWithUsername);
+
+userRouter.get('/isUserExists/:userId', userController.isUserExists);
+
 userRouter.route('/')
     .get(authenticate.verifyUser, authenticate.verifyAdmin, userController.getAllUsers)
     .post((req, res, next) => {
