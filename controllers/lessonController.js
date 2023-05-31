@@ -38,7 +38,7 @@ const insertLesson = (req, res, next) => {
 
 const updateLesson = (req, res, next) => {
     res.setHeader("Content-Type", "application/json");
-    lessonService.updateLesson(req.body)
+    lessonService.updateLesson(req.body, req.params.lessonId)
         .then((updateLessonResponse) => {
             res.statusCode = 200;
             res.json(generateMesage(true, updateLessonResponse));

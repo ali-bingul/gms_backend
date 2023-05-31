@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "devStart": "nodemon ./bin/www",
     "make-model": "npx sequelize-cli model:generate --name lesson --attributes lesson_name:string",
-    "make-seed": "npx sequelize-cli seed:generate --name user",
+    "make-seed": "npx sequelize-cli seed:generate --name lessons",
     "seed": "npx sequelize-cli db:seed:all",
     "undo-seed": "npx sequelize-cli db:seed:undo:all",
     "migrate": "npx sequelize-cli db:migrate",

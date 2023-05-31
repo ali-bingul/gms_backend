@@ -38,12 +38,16 @@ const insertLesson = (lessonData) => {
     });
 }
 
-const updateLesson = (userData, userId) => {
+const updateLesson = (lessonData, lessonId) => {
     return new Promise((resolve, reject) => {
         Lesson.update({
             lesson_name: lessonData.lesson_name,
             lesson_code: lessonData.lesson_code,
             lesson_term: lessonData.lesson_term
+        }, {
+            where: {
+                id: lessonId
+            }
         }).then((updateLessonResponse) => {
             resolve(updateLessonResponse);
         }).catch((err) => {

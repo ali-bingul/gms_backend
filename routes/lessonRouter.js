@@ -13,7 +13,7 @@ lessonRouter.route('/')
     .get(lessonController.getAllLessons)
     .post(authenticate.verifyUser, lessonController.insertLesson);
 
-lessonRouter.route('/:projectId')
+lessonRouter.route('/:lessonId')
     .get(lessonController.getSingleLesson)
     .put(authenticate.verifyUser, lessonController.updateLesson)
     .delete(authenticate.verifyUser, lessonController.deleteSingleLesson);

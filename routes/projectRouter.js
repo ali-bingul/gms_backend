@@ -18,7 +18,7 @@ projectRouter.put('/:projectId/setProjectPassive', authenticate.verifyUser, proj
 
 projectRouter.route('/')
     .get(projectController.getAllProjects)
-    .post(authenticate.verifyUser, upload().any(), projectController.insertProject)
+    .post(upload().any(), projectController.insertProject)
     .put((req, res, next) => {
         res.status(403).json(generateMesage(false, null, "PUT operation is not supported on /project"));
     })

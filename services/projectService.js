@@ -94,6 +94,7 @@ const insertProject = (projectData, fileDatas) => {
             final_paper_filename: finalPaperFilename,
             presentation_filename: presentationFilename,
             is_active: false,
+            lesson_id: projectData.lesson_id
         }).then((insertProjectResponse) => {
             resolve(insertProjectResponse);
         }).catch((err) => {
@@ -110,6 +111,7 @@ const updateProject = (projectData, projectId) => {
             team_members: projectData.team_members,
             year: projectData.year,
             term: projectData.term,
+            lesson_id: projectData.lesson_id
         }, {
             where: {
                 id: projectId
