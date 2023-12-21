@@ -15,9 +15,7 @@ const fields = [
 const signupUser = (userData) => {
     return new Promise((resolve, reject) => {
         userService.getSingleUserWithUsername(userData.username).then((user) => {
-            console.log(user);
             if (user === null) {
-                console.log("inside if", userData.password);
                 encryptionService.encryptPassword(userData.password).then((hashedPassword) => {
                     User.create({
                         name_surname: userData.name_surname,

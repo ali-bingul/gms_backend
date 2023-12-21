@@ -1,6 +1,6 @@
 const db = require("../db/databasepg");
 
-const { Sequelize, DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
 
 const User = db.define('user', {
   // Model attributes are defined here
